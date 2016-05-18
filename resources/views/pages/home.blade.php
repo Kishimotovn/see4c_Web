@@ -35,7 +35,7 @@
     		</row>
         	<row>
         		<h3>Charts:</h3>
-	               <canvas id="myLineChart" height="200"></canvas>
+	               <canvas id="myLineChart" height="200" width="300"></canvas>
 	            <h3>Project Details</h3>
 	            <ul>
 	                <li>Lorem Ipsum</li>
@@ -104,7 +104,7 @@
         $.ajax({url:'http://localhost:8000/data/data.json'})
           .fail(function(){alert("Im a failure")})
           .done(function(data){
-            //var myData = JSON.parse(data);
+            var myData = JSON.parse(data);
             console.log(data);
             Array.prototype.mapProperty = function(property) {
                 return this.map(function (obj) {
@@ -125,14 +125,31 @@
                        pointStrokeColor : "#fff",
                        pointHighlightFill : "#fff",
                        pointHighlightStroke : "rgba(220,220,220,1)",
-                       data : myData.mapProperty('Y0')
+                       data : myData.mapProperty('Y2')
                     }
                 ]
             };
-
-
-            console.log("cheerio")
+            console.log(myData.mapProperty('X'));
+            console.log(myData.mapProperty('Y2'));
+            console.log("cheerio");
             var ctx = document.getElementById("myLineChart").getContext("2d");
-            window.myLine = new Chart(ctx).Line(lineChartData);
+            //window.myLine = new Chart.Line(lineChartData);
+            // var a = new Chart(ctx, {
+            //     type: 'line',
+            //     data: lineChartData
+            // });
+            var myLineChart = Chart.Line(ctx, {
+                data: lineChartData,
+                options: {
+                    xAxes: [{
+                        display: false
+                    }]
+                }
+            });
         });
-    </script>
+
+        // $.get('{{url('/data/data.json')}}', function(data){
+        //     alert("Data: " + data);
+        // });
+        </script>
+    @stop
