@@ -97,51 +97,15 @@
 
 			// alert(sec);
 			// vid.currentTime = sec;
-
-            alert('lol');
-            $.ajax({url:"{{url('/data/data2.json')}}",dataType:"json"})
-              .fail(function(){alert("Im a failure")})
-              .done(function(data){
-                var myData = (data);
-                console.log(myData[0].X);
-                Array.prototype.mapProperty = function(property) {
-                    return this.map(function (obj) {
-                        return obj[property];
-                    });
-
-                };
-
-                // Example: myData.mapProperty('rank') to get an array of all ranks 
-                lineChartData = {
-                    labels : myData.mapProperty('X'),
-                    datasets : [
-                       {
-                           label: "My First dataset",
-                           fillColor : "rgba(220,220,220,0.2)",
-                           strokeColor : "rgba(220,220,220,1)",
-                           pointColor : "rgba(220,220,220,1)",
-                           pointStrokeColor : "#fff",
-                           pointHighlightFill : "#fff",
-                           pointHighlightStroke : "rgba(220,220,220,1)",
-                           data : myData.mapProperty('Y0')
-                        }
-                    ]
-                };
-
-                
-                console.log("cheerio")
-                var ctx = document.getElementById("myLineChart").getContext("2d");
-                window.myLine = new Chart(ctx).Line(lineChartData);
-            });
-		}
+        }
 	</script>
     <script type="text/javascript">
         alert('lol');
-        $.ajax({url:{{url('/data/data2.json')}},dataType:"json"})
+        $.ajax({url:'http://localhost:8000/data/data.json'})
           .fail(function(){alert("Im a failure")})
           .done(function(data){
-            var myData = (data);
-            console.log(myData[0].X);
+            //var myData = JSON.parse(data);
+            console.log(data);
             Array.prototype.mapProperty = function(property) {
                 return this.map(function (obj) {
                     return obj[property];
@@ -149,7 +113,7 @@
 
             };
 
-            // Example: myData.mapProperty('rank') to get an array of all ranks 
+            // Example: myData.mapProperty('rank') to get an array of all ranks
             lineChartData = {
                 labels : myData.mapProperty('X'),
                 datasets : [
@@ -166,10 +130,9 @@
                 ]
             };
 
-            
+
             console.log("cheerio")
             var ctx = document.getElementById("myLineChart").getContext("2d");
             window.myLine = new Chart(ctx).Line(lineChartData);
         });
     </script>
-@stop
