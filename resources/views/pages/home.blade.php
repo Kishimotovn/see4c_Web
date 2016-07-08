@@ -34,8 +34,6 @@
 
     		</row>
         	<row>
-        		<h3>Charts:</h3>
-	               <canvas id="myLineChart" height="200" width="300"></canvas>
 	            <h3>Project Details</h3>
 	            <ul>
 	                <li>Lorem Ipsum</li>
@@ -48,6 +46,17 @@
 
     </div>
     <!-- /.row -->
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h3 class="page-header">Timeline</h3>
+        </div>
+
+        <div id="chartParrent" class="col-lg-12">
+            <canvas id="myLineChart" height="200" width="300"></canvas>
+        </div>
+    </div>
 
     <!-- Related Projects Row -->
     <div class="row">
@@ -87,57 +96,80 @@
 @stop
 
 @section('footer')
-	<script type="text/javascript">
-		function clicked() {
-			// var input = document.getElementById("input");
-			// var frameNumber = input.value;
-
-			// var vid = document.getElementById("vid");
-			// var sec = frameNumber / 25;
-
-			// alert(sec);
-			// vid.currentTime = sec;
-        }
-	</script>
     <script type="text/javascript">
-        alert('lol');
         $.ajax({url:'http://localhost:8000/data/data.json'})
           .fail(function(){alert("Im a failure")})
           .done(function(data){
             var myData = JSON.parse(data);
-            console.log(data);
+            //console.log(data);
             Array.prototype.mapProperty = function(property) {
                 return this.map(function (obj) {
                     return obj[property];
                 });
+            };
 
+            Array.prototype.mapTime = function(property) {
+                return this.map(function (obj) {
+                    var totalSec = obj[property] / 25;
+                    var hours = parseInt( totalSec / 3600 ) % 24;
+                    var minutes = parseInt( totalSec / 60 ) % 60;
+                    var seconds = totalSec % 60;
+
+                    var result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+                    return result;
+                });
             };
 
             // Example: myData.mapProperty('rank') to get an array of all ranks
             lineChartData = {
-                labels : myData.mapProperty('X'),
+                labels : myData.mapTime('X'),
                 datasets : [
                    {
-                       label: "My First dataset",
-                       fillColor : "rgba(220,220,220,0.2)",
-                       strokeColor : "rgba(220,220,220,1)",
-                       pointColor : "rgba(220,220,220,1)",
-                       pointStrokeColor : "#fff",
-                       pointHighlightFill : "#fff",
-                       pointHighlightStroke : "rgba(220,220,220,1)",
-                       data : myData.mapProperty('Y2')
+                        label: "Y0",
+                        fill: false,
+                        lineTension: 0.1,
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        borderColor: "rgba(75,192,192,1)",
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: "rgba(75,192,192,1)",
+                        pointBackgroundColor: "#fff",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                        pointHoverBorderColor: "rgba(220,220,220,1)",
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data : myData.mapProperty('Y0')
+                    },
+                    {
+                        label: "Y2",
+                        fill: false,
+                        lineTension: 0.1,
+                        backgroundColor: "rgba(192,75,192,0.4)",
+                        borderColor: "rgba(192,75,192,1)",
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: "rgba(192,75,192,1)",
+                        pointBackgroundColor: "#000",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(192,75,192,1)",
+                        pointHoverBorderColor: "rgba(220,220,220,1)",
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data : myData.mapProperty('Y2')
                     }
                 ]
             };
-            console.log(myData.mapProperty('X'));
-            console.log(myData.mapProperty('Y2'));
-            console.log("cheerio");
             var ctx = document.getElementById("myLineChart").getContext("2d");
-            //window.myLine = new Chart.Line(lineChartData);
-            // var a = new Chart(ctx, {
-            //     type: 'line',
-            //     data: lineChartData
-            // });
+
             var myLineChart = Chart.Line(ctx, {
                 data: lineChartData,
                 options: {
@@ -146,10 +178,28 @@
                     }]
                 }
             });
-        });
 
-        // $.get('{{url('/data/data.json')}}', function(data){
-        //     alert("Data: " + data);
-        // });
+            var z = document.getElementById("myLineChart")
+
+            z.onclick = function(evt) {
+                //alert('clicked');
+                var activePoints = myLineChart.getElementsAtEvent(evt);
+                console.log(activePoints);
+                /* this is where we check if event has keys which means is not empty space */       
+                if(Object.keys(activePoints).length > 0)
+                {
+                    var frameNumber = activePoints[0]["_index"];
+
+                    var vid = document.getElementById("vid");
+                    var sec = frameNumber / 25;
+
+                    vid.currentTime = sec;
+
+                }
+            };
+
+            var div = document.getElementById("chartParrent");
+            div.style.display = 'block';
+        });
         </script>
     @stop
