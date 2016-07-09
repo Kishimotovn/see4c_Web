@@ -13,7 +13,8 @@ class PagesController extends Controller
     public function home() {
     	$category = 'Natures';
     	$videos = Video::where('category', '=', 'Natuur')->paginate(12);
-    	return view('pages.videos', compact('videos', 'category'));
+    	$thumbLink = "http://www.ufunk.net/wp-content/uploads/2016/01/ValentinValkov-2.jpg";
+    	return view('pages.videos', compact('videos', 'category', 'thumbLink'));
     }
 
     public function about() {

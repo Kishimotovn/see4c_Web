@@ -7,8 +7,6 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "sqlite3": "*",
-        "ext-sqlite3": "*",
         "ext-pdo_sqlite": "*",
         "linkthrow/ffmpeg": "dev-master"
     },
