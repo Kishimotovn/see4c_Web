@@ -15,4 +15,6 @@ Route::get('/', 'PagesController@home');
 
 Route::get('/about', 'PagesController@about');
 
-Route::get('/Natures', 'PagesController@getNature');
+Route::get('/{category}', 'PagesController@getVideos');
+
+Route::get('/{category}/{videoName}', 'PagesController@getClips');

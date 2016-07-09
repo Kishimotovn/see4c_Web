@@ -31,6 +31,15 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
+                        <a href="{{url('/Natures')}}">Nature Videos</a>
+                    </li>
+                    <li>
+                        <a href="{{url('/SoundVision')}}">Sound Vision Videos</a>
+                    </li>
+                    <li>
+                        <a href="{{url('/Theater')}}">Theater Videos</a>
+                    </li>
+                    <li>
                         <a href="#">About</a>
                     </li>
                 </ul>
