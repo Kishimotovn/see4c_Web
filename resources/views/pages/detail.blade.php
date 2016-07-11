@@ -17,7 +17,7 @@
         <div class="col-md-8">
             <!-- <img class="img-responsive" src="{{url('/img/1.png')}}" alt=""> -->
             <video id="vid" width="750" height="500" controls>
-			  <source src="http://pageperso.lif.univ-mrs.fr/~anh.phan.tran/video.mp4" type="video/mp4">
+			  <source src="http://pageperso.lif.univ-mrs.fr/data/{{$video->category}}/{{$video->videoName}}" type="video/mp4">
 			  Your browser does not support HTML5 video.
 			</video>
 			<!-- <iframe width="750" height="500" src="//www.youtube.com/embed/BstTBw6BLrE" frameborder="0" allowfullscreen></iframe> -->
@@ -34,12 +34,10 @@
 
     		</row>
         	<row>
-	            <h3>Project Details</h3>
+	            <h3>Video Details</h3>
 	            <ul>
-	                <li>Lorem Ipsum</li>
-	                <li>Dolor Sit Amet</li>
-	                <li>Consectetur</li>
-	                <li>Adipiscing Elit</li>
+	                <li>Video name: {{$video->videoName}}</li>
+	                <li>Category: {{$video->category}}</li>
 	            </ul>
         	</row>
         </div>
@@ -70,7 +68,7 @@
             <li class="col-lg-3 col-sm-4 col-xs-6">
                 <a href= "#" title="">
                     <video id="vid" width="255" height="140" controls>
-                      <source src="http://pageperso.lif.univ-mrs.fr/~anh.phan.tran/video.mp4" type="video/mp4">
+                      <source src="http://pageperso.lif.univ-mrs.fr/data/5sClips/{{$video->category}}/{{$videoNameWithNoExtension}}/{{$clip->clipName}}" type="video/mp4">
                       Your browser does not support HTML5 video.
                     </video>
                     <h2>seqID: {{ $clip->seqId }}</h2>
@@ -85,7 +83,7 @@
                     @endif
                     
                     <!-- <span class="glyphicon glyphicon-play-circle"></span> -->
-                    <span class="duration">03:15</span>
+                    <span class="duration">00:05</span>
                 </a>
             </li>
             @endforeach
@@ -102,7 +100,7 @@
 @section('footer')
     <script type="text/javascript">
         $.ajax({url:'http://localhost:8000/data/data.json'})
-          .fail(function(){alert("Im a failure")})
+          .fail(function(){alert("Json loading failed")})
           .done(function(data){
             var myData = JSON.parse(data);
             //console.log(data);
@@ -148,27 +146,6 @@
                         pointRadius: 1,
                         pointHitRadius: 10,
                         data : myData.mapProperty('Y0')
-                    },
-                    {
-                        label: "Y2",
-                        fill: false,
-                        lineTension: 0.1,
-                        backgroundColor: "rgba(192,75,192,0.4)",
-                        borderColor: "rgba(192,75,192,1)",
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "rgba(192,75,192,1)",
-                        pointBackgroundColor: "#000",
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: "rgba(192,75,192,1)",
-                        pointHoverBorderColor: "rgba(220,220,220,1)",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data : myData.mapProperty('Y2')
                     }
                 ]
             };

@@ -44,7 +44,8 @@ class PagesController extends Controller
     		$video = Video::where('videoName', '=', $videoName)->first();
 	    	$clips = Clip::where('videoName', '=', $videoName)->paginate(4);
 	    	$clipsCount = Clip::where('videoName', '=', $videoName)->count();
-    		return view('pages.detail', compact('video', 'category', 'clips', 'clipsCount'));
+        $videoNameWithNoExtension = rtrim($video->videoName, ".mp4");
+    		return view('pages.detail', compact('video', 'category', 'clips', 'clipsCount', 'videoNameWithNoExtension'));
    		} else {
    			return "404";
    		}
